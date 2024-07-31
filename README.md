@@ -1,0 +1,2 @@
+# Synopsis
+Thtis is a repo which I want to dedicate to presentation of different languages and testing frameworks on my https://latunkatar.org website. For more datails look at readme at respective folder.
