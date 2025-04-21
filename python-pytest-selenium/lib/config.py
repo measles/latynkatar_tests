@@ -1,3 +1,5 @@
+"""Some common test parameters"""
+
 import os
 
-BASE_URL = os.getenv("BASE_URL")
+BASE_URL: str = os.getenv("BASE_URL", "")

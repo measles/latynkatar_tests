@@ -11,3 +11,14 @@ dependencies = [
     "pytest-randomly>=3.16.0",
     "selenium>=4.31.0",
 ]
+
+[tool.flake8]
+max-line-length = 120
+
+[tool.pylint.'MESSAGES CONTROL']
+max-line-length = 120
+
+[[tool.mypy.overrides]]
+module = "pytest_metadata.*"
+ignore_missing_imports = true
+
