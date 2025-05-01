@@ -35,18 +35,16 @@ def black(session):
 
 
 @nox.session(tags=("lint",))
-def ruff(session):
-    """Formating and static tests form ruff itself"""
-    session.install("ruff")
-    session.run("ruff", "format", "lib", "tests/", "noxfile.py")
-    session.run("ruff", "check", "lib", "tests/", "noxfile.py")
-
-
-@nox.session(tags=("lint",))
 def pylint(session):
     """Check code with pilint"""
     session.install(
-        "pylint", "nox", "pytest", "pytest_randomly", "pytest_html", "selenium"
+        "pylint",
+        "nox",
+        "pytest",
+        "pytest_randomly",
+        "pytest_html",
+        "selenium",
+        "pyperclip",
     )
     session.run("pylint", "lib", "tests/", "noxfile.py")
 
@@ -61,7 +59,10 @@ def flake8(session):
 @nox.session(tags=("lint",))
 def mypy(session):
     """Check types definitions with mypy"""
-    session.install("mypy", "nox", "pytest_randomly", "pytest_html", "selenium")
+    session.install(
+        "mypy", "nox", "pytest_randomly", "pytest_html", "selenium", "pyperclip"
+    )
+    session.run("mypy", "--install-types")
     session.run("mypy", "noxfile.py")
     session.run("mypy", "lib")
     session.run("mypy", "tests/")

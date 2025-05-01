@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "nox>=2025.2.9",
+    "pyperclip>=1.9.0",
     "pytest>=8.3.5",
     "pytest-html>=4.1.1",
     "pytest-randomly>=3.16.0",
@@ -22,3 +23,9 @@ max-line-length = 120
 module = "pytest_metadata.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "pyperclip.*"
+follow_untyped_imports = true
+
+[tool.isort]
+profile = "black"
