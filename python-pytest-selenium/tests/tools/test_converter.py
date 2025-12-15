@@ -14,6 +14,10 @@ from selenium.webdriver.remote.webelement import WebElement
 from lib.config import BASE_URL
 
 
+def _clean_local_storage(driver: webdriver.Chrome) -> str:
+    return driver.execute_script("return window.localStorage.clear();")
+
+
 @fixture(name="driver")
 def get_ready_to_test_driver() -> Iterator[webdriver.Chrome]:
     """Generates redy to application driver object and opens converter page.
@@ -27,6 +31,8 @@ def get_ready_to_test_driver() -> Iterator[webdriver.Chrome]:
     driver.get(BASE_URL)
     driver.implicitly_wait(5)
 
+
+    _clean_local_storage(driver)
     yield driver
 
     driver.quit()
@@ -78,11 +84,11 @@ def test_convert_default(driver: webdriver.Chrome):
 
     assert (
         output_field.get_attribute("value")
-        == "Chiba ž heta špakoŭnia? Śmiech dy j hodzie!"
+        == "Chiba ž heta špakoŭnia? Smiech dy j hodzie!"
     )
 
 
-def test_convert_without_palatalization(driver: webdriver.Chrome):
+def test_convert_with_palatalization(driver: webdriver.Chrome):
     """Test convertation without palatalization.
 
     Args:
@@ -101,7 +107,7 @@ def test_convert_without_palatalization(driver: webdriver.Chrome):
 
     assert (
         output_field.get_attribute("value")
-        == "Chiba ž heta špakoŭnia? Smiech dy j hodzie!"
+        == "Chiba ž heta špakoŭnia? Śmiech dy j hodzie!"
     )
 
 
@@ -126,11 +132,11 @@ def test_convert_to_old_graphics(driver: webdriver.Chrome):
 
     assert (
         output_field.get_attribute("value")
-        == "Chiba ż heta szpakoŭnia? Śmiech dy j hodzie!"
+        == "Chiba ż heta szpakoŭnia? Smiech dy j hodzie!"
     )
 
 
-def test_convert_to_old_graphics_without_palatalization(driver: webdriver.Chrome):
+def test_convert_to_old_graphics_with_palatalization(driver: webdriver.Chrome):
     """Test convertation to an old graphics without palatalization.
 
     Args:
@@ -153,7 +159,7 @@ def test_convert_to_old_graphics_without_palatalization(driver: webdriver.Chrome
 
     assert (
         output_field.get_attribute("value")
-        == "Chiba ż heta szpakoŭnia? Smiech dy j hodzie!"
+        == "Chiba ż heta szpakoŭnia? Śmiech dy j hodzie!"
     )
 
 
@@ -194,7 +200,8 @@ def test_copy_to_clipbiard_button(driver: webdriver.Chrome):
     time.sleep(1)
     copy_to_clipboard_button.click()
 
-    assert pyperclip.paste() == "Chiba ž heta špakoŭnia? Śmiech dy j hodzie!"
+    assert pyperclip.paste() == "Chiba ž heta špakoŭnia? Smiech dy j hodzie!"
+
 
 
 #
@@ -234,7 +241,7 @@ def test_convert_by_hotkey(driver: webdriver.Chrome):
 
     assert (
         output_field.get_attribute("value")
-        == "Chiba ž heta špakoŭnia? Śmiech dy j hodzie!"
+        == "Chiba ž heta špakoŭnia? Smiech dy j hodzie!"
     )
 
 
@@ -264,7 +271,7 @@ def test_switch_to_old_graphics_by_hotkey(driver: webdriver.Chrome):
 
     assert (
         output_field.get_attribute("value")
-        == "Chiba ż heta szpakoŭnia? Śmiech dy j hodzie!"
+        == "Chiba ż heta szpakoŭnia? Smiech dy j hodzie!"
     )
 
 
@@ -294,5 +301,5 @@ def test_switch_to_modern_graphics_by_hotkey(driver: webdriver.Chrome):
 
     assert (
         output_field.get_attribute("value")
-        == "Chiba ž heta špakoŭnia? Śmiech dy j hodzie!"
+        == "Chiba ž heta špakoŭnia? Smiech dy j hodzie!"
     )

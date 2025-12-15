@@ -66,3 +66,4 @@ def mypy(session):
     session.run("mypy", "noxfile.py")
     session.run("mypy", "lib")
     session.run("mypy", "tests/")
+
